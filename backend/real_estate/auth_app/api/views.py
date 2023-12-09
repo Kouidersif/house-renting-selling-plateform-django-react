@@ -2,7 +2,7 @@ from .serializers import UserModelSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
 from auth_app.models import User
-
+from .permission.user_permission import IsOwnerOrReadOnly
 
 """
 Using a variable to store the serializer for future, to avoid repeatition, in case of - 
@@ -20,7 +20,7 @@ class UserCreationAPIView(generics.ListCreateAPIView):
 class UserRetrieveAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = serializer_class
     queryset = serializer_class.Meta.model
-    
+    permission_classes = [ IsOwnerOrReadOnly ]
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
