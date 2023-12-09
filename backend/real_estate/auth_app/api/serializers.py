@@ -20,12 +20,13 @@ class UserModelSerializer(serializers.ModelSerializer):
         
         validate_email(self.Meta.model, email)
         
-        validate_password(pwd)
+        password = validate_password(pwd)
         
         
         user = self.Meta.model(
             **validated_data
         )
+        user.set_password(password)
         user.save()
         return user
     
