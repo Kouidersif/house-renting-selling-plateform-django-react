@@ -13,12 +13,12 @@ def validate_password(value):
         has_special_char = re.search(r'[!@#$%^&*()\-_=+{};:,<.>]', value)
         # Check for minimum length
         if len(value) < min_length:
-            raise serializers.ValidationError("Password must be at least 8 characters long.")
+            raise serializers.ValidationError({"password":"Password must be at least 8 characters long."})
 
         # Check for uppercase, lowercase, digit, and special character presence
         if not (has_uppercase and has_lowercase and has_digit and has_special_char):
             raise serializers.ValidationError(
-                "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
+                {"password":"Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."}
             )
 
         return value
@@ -26,8 +26,8 @@ def validate_password(value):
     
     
 def validate_email(model, value):
-    exists = model.objects.filter(email=value.lower())
+    exists = model.objects.filter(email=value.lower()).exists()
     if exists:
-        raise serializers.ValidationError("Email address already exists - Login instead")
+        raise serializers.ValidationError({"email":"Email address already exists - Login instead"})
     
     return value

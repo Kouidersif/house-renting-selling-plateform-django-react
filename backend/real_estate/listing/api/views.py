@@ -2,8 +2,10 @@ from .serializers import (
     ListingSerializer
 )
 from rest_framework.response import Response
-from rest_framework import status, generics, permissions, authentication
+from rest_framework import status, generics, permissions, authentication, filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django_filters import rest_framework as filters
+from .filter import ListingFilter
 
 
 listing_serializer_class = ListingSerializer
@@ -11,8 +13,12 @@ listing_serializer_class = ListingSerializer
 
 class ListingAPIView(generics.ListAPIView):
     serializer_class = listing_serializer_class
-    queryset = serializer_class.Meta.model.objects.filter(is_public=True)
+    queryset = serializer_class.Meta.model.objects.filter(is_public=True).order_by("id")
     authentication_classes = [ JWTAuthentication ]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ListingFilter
+    # filterset_fields = [ "address", "listing_type", "contract_type", 
+    #                 "num_bed_rooms", "num_bath_rooms" ]
     
 class CreateListingAPIView(generics.CreateAPIView):
     serializer_class = listing_serializer_class

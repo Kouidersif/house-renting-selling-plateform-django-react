@@ -1,11 +1,13 @@
 from django.db import models
 from landlord.models import LandlordProfile
 from tenant.models import TenantProfile
-from .utils import BED_ROOM_BATH_ROOM_NUMBER, REQUEST_STATUS, LISTING_TYPE, get_upload_path
+from .utils import ( BED_ROOM_BATH_ROOM_NUMBER, REQUEST_STATUS, 
+                    LISTING_TYPE, get_upload_path, CONTRACT_TYPE )
 
 
 class Listing(models.Model):
     landlord = models.ForeignKey(LandlordProfile, related_name="listing_owner" , on_delete=models.SET_NULL, null=True)
+    listing_title = models.CharField(max_length=399)
     address = models.CharField(max_length=350)
     num_bed_rooms = models.CharField(max_length=10, choices=BED_ROOM_BATH_ROOM_NUMBER)
     num_bath_rooms = models.CharField(max_length=10, choices=BED_ROOM_BATH_ROOM_NUMBER)
@@ -13,6 +15,7 @@ class Listing(models.Model):
     property_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     year_built = models.CharField(max_length=299, null=True, blank=True)
     listing_type = models.CharField(max_length=299, choices=LISTING_TYPE)
+    contract_type = models.CharField(max_length=299, choices=CONTRACT_TYPE)
     is_public = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     

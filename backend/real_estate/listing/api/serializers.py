@@ -11,9 +11,9 @@ class ListingSerializer(serializers.ModelSerializer):
     landlord_id = serializers.PrimaryKeyRelatedField(queryset=LandlordProfile.objects.all())
     class Meta:
         model = Listing
-        fields = ( "id", "landlord", "address","num_bed_rooms" , "landlord_id", 
+        fields = ( "id", "landlord", "listing_title", "address","num_bed_rooms" , "landlord_id", 
                 "num_bath_rooms", "property_area", "property_price", 
-                "year_built", "listing_type",  "is_public", "created_on" ) 
+                "year_built", "listing_type", "contract_type", "is_public", "created_on" ) 
         depth = 1
         
     def create(self, validated_data):

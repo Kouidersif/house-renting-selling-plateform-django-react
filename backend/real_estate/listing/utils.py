@@ -6,6 +6,11 @@ BED_ROOM_BATH_ROOM_NUMBER = (
     ("+5", "+5"),
 )
 
+CONTRACT_TYPE = [
+    ("RENT", "RENT"),
+    ("SELL", "SELL"),
+]
+
 
 REQUEST_STATUS = (
     ("Sent", "Sent"),
