@@ -3,9 +3,32 @@ import { ButtonRadius } from "../../utils/exporter"
 import InputField from "../../utils/inputs/InputField"
 import propTypes from "prop-types"
 import houseGiftImg from "../../assets/images/auth-images/house-as-a-gift.jpg";
-
+import useAuthenticate from "../../hooks/auth/useAuthenticate";
+import { useState } from "react";
+import useGetAppContext from "../../../context/useGetAppContext";
 
 const Login = ({urls}) => {
+    const { loginFunc } = useAuthenticate();
+    const [ userEmail, setUserEamil ] = useState("")
+    const [ userPwd, setUserPwd ] = useState("")
+    const { setErrorApi } = useGetAppContext()
+
+    const handleButtonClick = (e)=>{
+        e.preventDefault()
+        if (!userEmail && !userPwd){
+            // Return an error message if fields are not sent
+            return setErrorApi("Please fill all fields")
+        }
+        const data = {
+            email: userEmail,
+            password: userPwd
+        }
+        loginFunc(
+            data
+        )
+    }
+
+
     return (
         <div className="w-[95%] xl:w-[80%] max-h-[100vh] overflow-y-hidden mx-auto flex py-8 lg:py-16 px-4">
             <form className="w-full md:w-1/2">
@@ -44,14 +67,9 @@ const Login = ({urls}) => {
                 </div>
             <h2 className="text-center md:text-start">Welcome back!</h2>
             <div className="flex flex-col gap-6">
-            <InputField placeHolder={"Enter your name"} labelName={"Name"} inputType={"text"} inputID={"userFullName"} />
-            <InputField placeHolder={"Enter your email"} labelName={"Email address"} inputType={"email"} inputID={"userEmail"} />
-            <InputField placeHolder={"Enter your password"} labelName={"Password"}  inputType={"password"} inputID={"userPassword"} />
-            <div className="flex gap-2 items-center">
-                <input type="checkbox" className="w-4 h-4 peer-checked:border-red-500 border-2" name="" id="" />
-                <label htmlFor="inputCheckBox">I agree to the terms & policy</label>
-            </div>
-            <ButtonRadius text="Login" styleClass="bg-primary text-white py-2 mt-7 hover:bg-primary/90" />
+            <InputField value={userEmail} onChangeFunc={setUserEamil} placeHolder={"Enter your email"} labelName={"Email address"} inputType={"email"} inputID={"userEmail"} />
+            <InputField value={userPwd} onChangeFunc={setUserPwd} placeHolder={"Enter your password"} labelName={"Password"}  inputType={"password"} inputID={"userPassword"} />
+            <ButtonRadius handleButtonClick={handleButtonClick} text="Login" styleClass="bg-primary text-white py-2 mt-4 hover:bg-primary/90" />
             <h4 className="text-center mt-2">Don’t have an account ? <Link to={urls.register} className="text-blue-600">Register now</Link></h4>
             </div>
             </div>

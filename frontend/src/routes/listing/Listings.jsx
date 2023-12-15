@@ -1,23 +1,39 @@
 import { ListingCards } from "../../utils/exporter"
 import FilterBar from "./FilterBar"
-import { DummyData } from "../../../api/data"
 import { Link } from "react-router-dom"
+import useFetchListing from "../../hooks/listing/useFetchListing"
 
 
 const Listings = () => {
-    const uuid = crypto.randomUUID()
+    const { listingOjbects, setAddress, setBedRoomsNum,
+        setBathRoomsNum,
+        setContractType,
+        setListingType,address,
+        bedRoomsNum,
+        bathRoomsNum,
+        contractType,
+        listingType } = useFetchListing()
+
+        address
+        bedRoomsNum
+        bathRoomsNum
+        contractType
+        listingType
     return (
         <div className="w-[95%] xl:w-[80%] mx-auto py-8 lg:py-16 px-4">
-            <FilterBar />
+            <FilterBar setAddress={setAddress} setBedRoomsNum={setBedRoomsNum} address={address} 
+                setBathRoomsNum={setBathRoomsNum}  bathroom={bathRoomsNum} bedrooms={bedRoomsNum}
+                setContractType={setContractType}  contractType={contractType} listingType={listingType}
+                setListingType={setListingType}   />
             <div className="w-full flex items-center md:justify-center flex-wrap gap-6 py-8 lg:py-16">
                 {
-                    DummyData.map((data, idx)=>(
-                        <Link  key={uuid + idx} to={"/"}>
-                        <ListingCards imgUrl={data.img} tag={data.tag} specialClass="w-full md:w-auto" />
+                    listingOjbects?.map((data) => (
+                        <Link key={data.id} to={"/"}>
+                            <ListingCards dataObj={data} tag={"Popular"} specialClass="w-full md:w-auto" />
                         </Link>
                     ))
                 }
-            
+
             </div>
         </div>
     )

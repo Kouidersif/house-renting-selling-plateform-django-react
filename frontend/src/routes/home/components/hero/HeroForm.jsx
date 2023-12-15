@@ -15,7 +15,7 @@ const HeroForm = () => {
                     {/* Form start */}
                     <div className="w-full mx-auto flex flex-col gap-6">
                         {/* Input  */}
-                        <InputField labelName={"Location"} placeHolder={"New York, San Francisco, etc"} inputID={"locationFilter"} inputType={"text"}  />
+                        <InputField labelName={"Location"} placeHolder={"New York, San Francisco, etc"} inputID={"locationFilter"} value='' inputType={"text"}  />
                         {/* DropDown */}
                         <SelectInput selectID={"propertyType"} labelName={"Property Type"} optionsValue={["option"]} />
                         <SelectInput selectID={"roomsNum"} labelName={"Number of rooms"} optionsValue={["option"]} />

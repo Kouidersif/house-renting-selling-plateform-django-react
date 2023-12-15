@@ -1,12 +1,12 @@
 import { BaseParahraph, ListingCards } from "../../../../utils/exporter"
-import { DummyData } from "../../../../../api/data";
+import useFetchListing from "../../../../hooks/listing/useFetchListing";
 
 const heroText = "Donec porttitor euismod dignissim. Nullam a lacinia ipsum, nec dignissim purus. Nulla convallis \
 ipsum molestie nibh malesuada, ac malesuada leo volutpat."
 
 
 const RecentListings = () => {
-
+    const { listingOjbects } = useFetchListing()
     return (
         <section className="w-[95%] xl:w-[80%] mx-auto py-8 lg:py-16 px-4">
             <div className="flex flex-col gap-8">
@@ -23,10 +23,10 @@ const RecentListings = () => {
                 </div>
                 <div className="flex flex-wrap gap-12 justify-center">
                 {
-                            DummyData.slice(0, 3).map((data) => (
-                                <>
-                                        <ListingCards imgUrl={data.img} tag={data.tag} specialClass={""} />
-                                </>
+                            listingOjbects.slice(0, 3).map((data) => (
+
+                                <ListingCards key={data?.id} dataObj={data} tag={"Popular"} specialClass={""} />
+
                             ))
                 }
                 </div>
