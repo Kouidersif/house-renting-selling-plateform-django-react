@@ -1,8 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ButtonRadius } from "../../utils/exporter"
 import propTypes from "prop-types";
 
-const MobileNav = ({setShowMobileMenu, showMobileMenu, urls}) => {
+const MobileNav = ({setShowMobileMenu, showMobileMenu, urls, userObj}) => {
+    const navigate = useNavigate()
+
+
+    const redirectUser = (url) =>{
+        // Redirect user and close navbar menu
+        navigate(url)
+        setShowMobileMenu(!showMobileMenu)
+    }
+
+
     return (
         <>
             <div className="flex w-[90%] mx-auto h-full lg:hidden justify-between items-center">
@@ -44,15 +54,51 @@ const MobileNav = ({setShowMobileMenu, showMobileMenu, urls}) => {
                     <h2 onClick={()=> setShowMobileMenu(!showMobileMenu)} className="text-white absolute end-4">X</h2>
                 </div>
             <ul className="h-full flex flex-col justify-center items-center  text-white gap-4">
-            <li className="hover:text-primary cursor-pointer"><Link to={urls.home}>Home</Link></li>
+            <li className="hover:text-primary cursor-pointer" onClick={() => redirectUser(urls.home)}>Home</li>
             <li className="hover:text-primary cursor-pointer"><a href="#about">About</a></li>
-            <li className="hover:text-primary cursor-pointer"><Link to={urls.listing}>Listings</Link></li>
+            <li className="hover:text-primary cursor-pointer" onClick={() => redirectUser(urls.listing)}>Listings</li>
             <li className="hover:text-primary cursor-pointer"><a href="#services">Services</a></li>
-            <li className="hover:text-primary cursor-pointer"><Link to={""}>Blog</Link></li>
-                <li><Link to={urls.login} className="flex items-center gap-2">
-                    Login</Link></li>
-                <li><Link to={urls.register}>Register</Link></li>
-                <li><ButtonRadius text={"Add Listing"} styleClass="bg-primary text-white hover:bg-white hover:text-primary border-2 border-primary" /></li>
+            <li className="hover:text-primary cursor-pointer" onClick={() => redirectUser(urls.home)}>Blog</li>
+                <li><Link to={ !userObj?.access && urls.login || urls.userProfile} className="flex items-center gap-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={20}
+                                height={20}
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <path
+                                    d="M5.5 14.5C5.5 12.0147 7.51472 10 10 10C12.4853 10 14.5 12.0147 14.5 14.5"
+                                    stroke="#2B2B2B"
+                                    strokeWidth="1.6"
+                                    strokeLinecap="round"
+                                />
+                                <path
+                                    d="M9.99999 9.99998C11.4912 9.99998 12.7 8.79119 12.7 7.29998C12.7 5.80881 11.4912 4.59998 9.99999 4.59998C8.50878 4.59998 7.29999 5.80881 7.29999 7.29998C7.29999 8.79119 8.50878 9.99998 9.99999 9.99998Z"
+                                    stroke="#2B2B2B"
+                                    strokeWidth="1.6"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19Z"
+                                    stroke="#2B2B2B"
+                                    strokeWidth="1.6"
+                                />
+                            </svg>
+                            {
+                                userObj?.access ? "Profile" : "Login"
+                            }
+                        </Link></li>
+                        {
+                            !userObj?.access &&
+                            <>
+                                <li><Link to={urls.register}>Register</Link></li>
+                                <li><ButtonRadius text={"Add Listing"} styleClass="bg-primary text-white hover:bg-white 
+                                hover:text-primary border-2 border-primary" /></li>
+                            </>
+                        }
+                
 
             </ul>
             </div>
@@ -62,9 +108,10 @@ const MobileNav = ({setShowMobileMenu, showMobileMenu, urls}) => {
 
 
 MobileNav.propTypes = {
-    setShowMobileMenu: propTypes.func.isRequired,
-    showMobileMenu : propTypes.bool.isRequired,
-    urls : propTypes.object.isRequired,
+    setShowMobileMenu: propTypes.func.isRequired, // coming from navbar component
+    showMobileMenu : propTypes.bool.isRequired, // coming from navbar component
+    urls : propTypes.object.isRequired, // coming from navbar component
+    userObj: propTypes.object // coming from navbar component
 }
 
 export default MobileNav

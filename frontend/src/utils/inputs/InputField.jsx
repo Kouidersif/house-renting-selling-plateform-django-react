@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
+import FormErrors from "../errors/FormErrors"
 
-const InputField = ({placeHolder, labelName, inputType, inputID, value, onChangeFunc}) => {
+const InputField = ({placeHolder, labelName, inputType, inputID, value, onChangeFunc, err}) => {
     return (
         <div className="flex flex-col">
             <label htmlFor={inputID} className="">{labelName}</label>
@@ -14,6 +15,7 @@ const InputField = ({placeHolder, labelName, inputType, inputID, value, onChange
             placeholder={placeHolder}
             className="w-full p-2 border-2 mt-1 rounded-xl"
             />
+            <FormErrors error={err} />
         </div>
     )
 }
@@ -25,6 +27,7 @@ InputField.propTypes = {
     inputID: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChangeFunc: PropTypes.func,
+    err: PropTypes.any,
 }
 
 

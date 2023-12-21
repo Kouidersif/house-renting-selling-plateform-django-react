@@ -1,8 +1,9 @@
 import propTypes from "prop-types"
-import React from "react";
+import FormErrors from "../errors/FormErrors";
 
 
-const SelectInput = ({ labelName, selectID, optionsValue, onChangeValue, selectValue }) => {
+
+const SelectInput = ({ labelName, selectID, optionsValue, onChangeValue, selectValue, err }) => {
 
     return (
         <div className="flex flex-col">
@@ -17,6 +18,7 @@ const SelectInput = ({ labelName, selectID, optionsValue, onChangeValue, selectV
                 }
 
             </select>
+            <FormErrors error={err} />
         </div>
     )
 }
@@ -27,7 +29,8 @@ SelectInput.propTypes = {
     selectID: propTypes.string.isRequired,
     optionsValue: propTypes.array.isRequired,
     onChangeValue: propTypes.func,
-    selectValue: propTypes.string
+    selectValue: propTypes.string,
+    err: propTypes.any
 }
 
 

@@ -9,6 +9,9 @@ export const axiosInstancePublic = axios.create({
 })  
 const axiosInstancePrivate = axios.create({
     baseURL,
+    headers: {
+        "Content-type": "application/json"
+    }
 })  
 
 

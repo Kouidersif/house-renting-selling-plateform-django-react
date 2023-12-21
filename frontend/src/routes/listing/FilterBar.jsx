@@ -70,11 +70,11 @@ FilterBar.propTypes = {
     setBathRoomsNum : propTypes.func,
     setContractType : propTypes.func,
     setListingType : propTypes.func,
-    address : propTypes.string.isRequired,
-    bedRoomsNum : propTypes.string.isRequired,
-    bathRoomsNum : propTypes.string.isRequired,
-    contractType : propTypes.string.isRequired,
-    listingType : propTypes.string.isRequired,
+    address : propTypes.string,
+    bedRoomsNum : propTypes.string,
+    bathRoomsNum : propTypes.string,
+    contractType : propTypes.string,
+    listingType : propTypes.string,
 }
 
 export default FilterBar

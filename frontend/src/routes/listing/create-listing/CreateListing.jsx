@@ -6,13 +6,58 @@ import houseSVG from "../../../assets/svg/small-house.svg";
 import flatSvg from "../../../assets/svg/flat-house.svg";
 import { Link } from "react-router-dom";
 import { ButtonRadius } from "../../../utils/exporter";
+import { useState } from "react";
+import useGetAppContext from "../../../../context/useGetAppContext";
+import useCreateListing from "../../../hooks/listing/useCreateListing";
+import { builtYears } from "../../../utils/arrHelpers";
 
 const CreateListing = () => {
+    const { decodedToken, setErrorApi, formsError } = useGetAppContext()
+    const { createObject } = useCreateListing()
+    const [address, setAddress] = useState("addreess");
+    const [numBathRoom, setNumBathRoom] = useState("2");
+    const [numBedRooms, setNumBedRooms] = useState("2");
+    const [price, setPrice] = useState("142142");
+    const [listingType, setListingType] = useState("House");
+    const [yearBuilt, setYearBuilt] = useState("1999");
+    const [propertyArea, setPropertyArea] = useState("1234");
+    const [listingTitle, setListingTitle] = useState("1mfsaf");
+    const [contractType, setContractType] = useState("RENT");
+    const [listingImages, setImages] = useState([]);
+
+    const handleSubmition = (e) => {
+        e.preventDefault()
+        if (!address || !numBathRoom || !numBedRooms || !price
+            || !listingType || !yearBuilt || !propertyArea) {
+            return setErrorApi("All fields are required!");
+        }
+        const formData = new FormData();
+        formData.append("landlord_id", decodedToken?.landlord_profile_id)
+        formData.append("address", address)
+        formData.append("num_bath_rooms", numBathRoom)
+        formData.append("num_bed_rooms", numBedRooms)
+        formData.append("property_price", price)
+        formData.append("listing_type", listingType)
+        formData.append("year_built", yearBuilt)
+        formData.append("property_area", propertyArea)
+        formData.append("contract_type", contractType)
+        formData.append("listing_title", listingTitle)
+        for (let i = 0; i < listingImages.length; i++) {
+            formData.append("files_img", listingImages[i]);
+        }
+
+        createObject(formData)
+    }
+
+
     return (
         <section className="w-[95%] xl:w-[60%] mx-auto py-8 lg:py-16 px-4">
             <Link className="text-blue-600" to={"/"}>{"<"} Go back Home</Link>
-            <form>
+            <form encType="multipart/form-data">
                 <div className="flex flex-col gap-5">
+                    {/* ===== CATEGORIES ===== */}
+
+
                     <div className="flex flex-col gap-2">
                         <>
                             <h4 className="my-7">Type of listing</h4>
@@ -21,6 +66,8 @@ const CreateListing = () => {
                                     <input
                                         className="absolute right-3 top-3 rounded-full w-5 h-5"
                                         type="radio"
+                                        value={"House"}
+                                        onChange={(e) => setListingType(e.target.value)}
                                         name="typeOfListing"
                                         id="typeOfListing1"
                                     />
@@ -37,6 +84,8 @@ const CreateListing = () => {
                                     <input
                                         className="absolute right-3 top-3 rounded-full w-5 h-5"
                                         type="radio"
+                                        value={"Flat"}
+                                        onChange={(e) => setListingType(e.target.value)}
                                         name="typeOfListing"
                                         id="typeOfListing2"
                                     />
@@ -53,6 +102,8 @@ const CreateListing = () => {
                                     <input
                                         className="absolute right-3 top-3 rounded-full w-5 h-5"
                                         type="radio"
+                                        value={"Multi-family"}
+                                        onChange={(e) => setListingType(e.target.value)}
                                         name="typeOfListing"
                                         id="typeOfListing3"
                                     />
@@ -69,6 +120,8 @@ const CreateListing = () => {
                                     <input
                                         className="absolute right-3 top-3 rounded-full w-5 h-5"
                                         type="radio"
+                                        value={"Farm/Land"}
+                                        onChange={(e) => setListingType(e.target.value)}
                                         name="typeOfListing"
                                         id="typeOfListing4"
                                     />
@@ -81,28 +134,41 @@ const CreateListing = () => {
                                         <span className="block">Farm/Land</span>
                                     </label>
                                 </div>
-
-
-
                             </div>
                             {/* End Row */}
                         </>
 
                     </div>
-                    <InputField placeHolder="15514 14 AVE, WHITESTONE, NY, 11357"
-                        labelName="Address" inputID="listingAddress" inputType="text" />
-                    <div className="w-full grid grid-cols-2 gap-4">
-                        <SelectInput labelName="Bedroom" optionsValue={["Select...", 1, 2, 3, 4, "+5"]} selectID="houseBedRooms" />
-                        <SelectInput labelName="Bathroom" optionsValue={["Select...", 1, 2, 3, 4, "+5"]} selectID="houseBathRooms" />
-                    </div>
-                    <div className="w-full grid grid-cols-2 gap-4">
-                        <InputField placeHolder="Area" labelName="Area" inputType={"number"} inputID="listingArea" />
-                        <SelectInput labelName="Year built" optionsValue={["Select year", 1999, 2000, 2003, 2004]} selectID="yearBuilr" />
 
-                    </div>
-                    <InputField placeHolder="Price" labelName="Price" inputType={"number"} inputID="listingPrice" />
+                    {/* ==== END CATEGORIES ===== */}
 
-                    {/* INPUT */}
+
+                    {/* ==== INPUTS START ==== */}
+                    <InputField onChangeFunc={setListingTitle} value={listingTitle} 
+                    placeHolder="2-Bedroom apartment for rent in NY" err={formsError?.listing_title}
+                        labelName="Title" inputID="titleListing" inputType="text" />
+
+
+                    <InputField onChangeFunc={setAddress} value={address} placeHolder="15514 14 AVE, WHITESTONE, NY, 11357"
+                        labelName="Address" inputID="listingAddress" err={formsError?.address} inputType="text" />
+
+                    <div className="w-full grid grid-cols-2 gap-4">
+                        <SelectInput onChangeValue={setNumBedRooms} labelName="Bedroom" 
+                        optionsValue={[1, 2, 3, 4, "+5"]} selectID="houseBedRooms" err={formsError?.num_bed_rooms} />
+                        <SelectInput onChangeValue={setNumBathRoom} labelName="Bathroom" 
+                        optionsValue={[1, 2, 3, 4, "+5"]} err={formsError?.num_bath_rooms} selectID="houseBathRooms" />
+                    </div>
+
+                    <SelectInput onChangeValue={setContractType} labelName="Contract Type" 
+                    optionsValue={["RENT", "SELL"]} selectID="contractType" err={formsError?.contract_type}  />
+                    <div className="w-full grid grid-cols-2 gap-4">
+                        <InputField value={propertyArea} onChangeFunc={setPropertyArea} 
+                        placeHolder="Area" labelName="Area" err={formsError?.property_area} inputType={"number"} inputID="listingArea" />
+                        <SelectInput onChangeValue={setYearBuilt} selectValue={yearBuilt} labelName="Year built" 
+                        optionsValue={builtYears} selectID="yearBuilr" err={formsError?.year_built} />
+                    </div>
+                    <InputField value={price} onChangeFunc={setPrice} err={formsError?.property_price} placeHolder="Price" labelName="Price" inputType={"number"} inputID="listingPrice" />
+                    {/* INPUT IMG */}
                     <div className="flex items-center justify-center w-full">
                         <label
                             htmlFor="dropzone-file"
@@ -131,12 +197,23 @@ const CreateListing = () => {
                                     PNG, JPG, JPEG
                                 </p>
                             </div>
-                            <input id="dropzone-file" type="file" className="hidden" multiple accept="image/*" />
+                            <input id="dropzone-file" onChange={(e) => setImages(e.target.files)} type="file"  className="hidden" multiple accept="image/*" />
+                            {
+                                Array.isArray(formsError?.files_img) ? 
+                                formsError?.files_img.map((err, idx)=>(
+                                    <>
+                                    <li key={idx} className="text-red-600">{err}</li>
+                                    </>
+                                ))
+                                :
+                                <span className="text-red-600">{formsError?.files_img}</span>
+                            }
                         </label>
                     </div>
-                    {/* Button submit */}
 
-                    <ButtonRadius text="Submit" styleClass="bg-primary hover:bg-primary/90 text-white mt-4 py-4" />
+                    {/*  ==== END INPUTS ==== */}
+                    {/* Button submit */}
+                    <ButtonRadius handleButtonClick={handleSubmition} text="Submit" styleClass="bg-primary hover:bg-primary/90 text-white mt-4 py-4" />
 
                 </div>
             </form>
@@ -146,4 +223,4 @@ const CreateListing = () => {
     )
 }
 
-export default CreateListing
+export default CreateListing;
