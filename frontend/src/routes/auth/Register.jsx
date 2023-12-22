@@ -10,10 +10,10 @@ import { useState } from "react";
 
 const Register = ({ urls }) => {
     const { registrationFunc } = useAuthenticate()
-    const [userFullName, setUserFullName] = useState("user user")
-    const [userEmail, setUserEamil] = useState("email@email.com")
-    const [userPwd, setUserPwd] = useState("pwd@123")
-    const [userType, setUserType] = useState("landlord")
+    const [userFullName, setUserFullName] = useState("")
+    const [userEmail, setUserEamil] = useState("")
+    const [userPwd, setUserPwd] = useState("")
+    const [userType, setUserType] = useState("")
     const { setErrorApi } = useGetAppContext()
 
 

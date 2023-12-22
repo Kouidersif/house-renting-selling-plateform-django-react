@@ -1,6 +1,6 @@
 from landlord.models import LandlordProfile
 from rest_framework import serializers
-
+from datetime import datetime
 
 
 
@@ -17,3 +17,4 @@ class LandlordSerializer(serializers.ModelSerializer):
         landlord.save()
         
         return landlord
+    

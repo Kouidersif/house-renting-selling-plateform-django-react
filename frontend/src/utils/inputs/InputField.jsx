@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import propTypes from "prop-types"
 import FormErrors from "../errors/FormErrors"
 
 const InputField = ({placeHolder, labelName, inputType, inputID, value, onChangeFunc, err}) => {
@@ -21,13 +21,14 @@ const InputField = ({placeHolder, labelName, inputType, inputID, value, onChange
 }
 
 InputField.propTypes = {
-    placeHolder: PropTypes.string.isRequired,
-    labelName: PropTypes.string.isRequired,
-    inputType: PropTypes.string.isRequired,
-    inputID: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    onChangeFunc: PropTypes.func,
-    err: PropTypes.any,
+    placeHolder: propTypes.string.isRequired,
+    labelName: propTypes.string.isRequired,
+    inputType: propTypes.string.isRequired,
+    inputID: propTypes.string.isRequired,
+    value: propTypes.string.isRequired,
+    onChangeFunc: propTypes.func,
+    err: propTypes.any,
+    disabled: propTypes.bool
 }
 
 

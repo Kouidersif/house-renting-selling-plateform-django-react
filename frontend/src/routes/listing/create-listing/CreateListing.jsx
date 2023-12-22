@@ -14,15 +14,15 @@ import { builtYears } from "../../../utils/arrHelpers";
 const CreateListing = () => {
     const { decodedToken, setErrorApi, formsError } = useGetAppContext()
     const { createObject } = useCreateListing()
-    const [address, setAddress] = useState("addreess");
-    const [numBathRoom, setNumBathRoom] = useState("2");
-    const [numBedRooms, setNumBedRooms] = useState("2");
-    const [price, setPrice] = useState("142142");
-    const [listingType, setListingType] = useState("House");
-    const [yearBuilt, setYearBuilt] = useState("1999");
-    const [propertyArea, setPropertyArea] = useState("1234");
-    const [listingTitle, setListingTitle] = useState("1mfsaf");
-    const [contractType, setContractType] = useState("RENT");
+    const [address, setAddress] = useState("");
+    const [numBathRoom, setNumBathRoom] = useState("");
+    const [numBedRooms, setNumBedRooms] = useState("");
+    const [price, setPrice] = useState("");
+    const [listingType, setListingType] = useState("");
+    const [yearBuilt, setYearBuilt] = useState("");
+    const [propertyArea, setPropertyArea] = useState("");
+    const [listingTitle, setListingTitle] = useState("");
+    const [contractType, setContractType] = useState("");
     const [listingImages, setImages] = useState([]);
 
     const handleSubmition = (e) => {
@@ -56,8 +56,6 @@ const CreateListing = () => {
             <form encType="multipart/form-data">
                 <div className="flex flex-col gap-5">
                     {/* ===== CATEGORIES ===== */}
-
-
                     <div className="flex flex-col gap-2">
                         <>
                             <h4 className="my-7">Type of listing</h4>
@@ -139,33 +137,27 @@ const CreateListing = () => {
                         </>
 
                     </div>
-
                     {/* ==== END CATEGORIES ===== */}
-
-
                     {/* ==== INPUTS START ==== */}
-                    <InputField onChangeFunc={setListingTitle} value={listingTitle} 
-                    placeHolder="2-Bedroom apartment for rent in NY" err={formsError?.listing_title}
+                    <InputField onChangeFunc={setListingTitle} value={listingTitle}
+                        placeHolder="2-Bedroom apartment for rent in NY" err={formsError?.listing_title}
                         labelName="Title" inputID="titleListing" inputType="text" />
-
-
                     <InputField onChangeFunc={setAddress} value={address} placeHolder="15514 14 AVE, WHITESTONE, NY, 11357"
                         labelName="Address" inputID="listingAddress" err={formsError?.address} inputType="text" />
-
                     <div className="w-full grid grid-cols-2 gap-4">
-                        <SelectInput onChangeValue={setNumBedRooms} labelName="Bedroom" 
-                        optionsValue={[1, 2, 3, 4, "+5"]} selectID="houseBedRooms" err={formsError?.num_bed_rooms} />
-                        <SelectInput onChangeValue={setNumBathRoom} labelName="Bathroom" 
-                        optionsValue={[1, 2, 3, 4, "+5"]} err={formsError?.num_bath_rooms} selectID="houseBathRooms" />
+                        <SelectInput onChangeValue={setNumBedRooms} labelName="Bedroom"
+                            optionsValue={[1, 2, 3, 4, "+5"]} selectID="houseBedRooms" err={formsError?.num_bed_rooms} />
+                        <SelectInput onChangeValue={setNumBathRoom} labelName="Bathroom"
+                            optionsValue={[1, 2, 3, 4, "+5"]} err={formsError?.num_bath_rooms} selectID="houseBathRooms" />
                     </div>
 
-                    <SelectInput onChangeValue={setContractType} labelName="Contract Type" 
-                    optionsValue={["RENT", "SELL"]} selectID="contractType" err={formsError?.contract_type}  />
+                    <SelectInput onChangeValue={setContractType} labelName="Contract Type"
+                        optionsValue={["RENT", "SELL"]} selectID="contractType" err={formsError?.contract_type} />
                     <div className="w-full grid grid-cols-2 gap-4">
-                        <InputField value={propertyArea} onChangeFunc={setPropertyArea} 
-                        placeHolder="Area" labelName="Area" err={formsError?.property_area} inputType={"number"} inputID="listingArea" />
-                        <SelectInput onChangeValue={setYearBuilt} selectValue={yearBuilt} labelName="Year built" 
-                        optionsValue={builtYears} selectID="yearBuilr" err={formsError?.year_built} />
+                        <InputField value={propertyArea} onChangeFunc={setPropertyArea}
+                            placeHolder="Area" labelName="Area" err={formsError?.property_area} inputType={"number"} inputID="listingArea" />
+                        <SelectInput onChangeValue={setYearBuilt} selectValue={yearBuilt} labelName="Year built"
+                            optionsValue={builtYears} selectID="yearBuilr" err={formsError?.year_built} />
                     </div>
                     <InputField value={price} onChangeFunc={setPrice} err={formsError?.property_price} placeHolder="Price" labelName="Price" inputType={"number"} inputID="listingPrice" />
                     {/* INPUT IMG */}
@@ -197,16 +189,16 @@ const CreateListing = () => {
                                     PNG, JPG, JPEG
                                 </p>
                             </div>
-                            <input id="dropzone-file" onChange={(e) => setImages(e.target.files)} type="file"  className="hidden" multiple accept="image/*" />
+                            <input id="dropzone-file" onChange={(e) => setImages(e.target.files)} type="file" className="hidden" multiple accept="image/*" />
                             {
-                                Array.isArray(formsError?.files_img) ? 
-                                formsError?.files_img.map((err, idx)=>(
-                                    <>
-                                    <li key={idx} className="text-red-600">{err}</li>
-                                    </>
-                                ))
-                                :
-                                <span className="text-red-600">{formsError?.files_img}</span>
+                                Array.isArray(formsError?.files_img) ?
+                                    formsError?.files_img.map((err, idx) => (
+                                        <>
+                                            <li key={idx} className="text-red-600">{err}</li>
+                                        </>
+                                    ))
+                                    :
+                                    <span className="text-red-600">{formsError?.files_img}</span>
                             }
                         </label>
                     </div>

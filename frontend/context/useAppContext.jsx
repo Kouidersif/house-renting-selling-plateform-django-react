@@ -10,11 +10,7 @@ const accessToken = Cookies.get("access_token") || null;
 const refreshToken = Cookies.get("refresh_token") || null;
 
 export const ContextAppProvider = ({children})=>{
-    let decodedToken;
-    // Decode token
-    if (accessToken){
-        decodedToken = decodeJwt(accessToken)
-    }
+    
 
     const [ userObj, setUserObj ] = useState({
         access:accessToken,
@@ -23,7 +19,11 @@ export const ContextAppProvider = ({children})=>{
     const [ errorAPI, setErrorApi ] = useState("");
     const [ successAPI, setSuccessApi ] = useState("");
     const [ formsError , setFormsError ] = useState(null);
-
+    let decodedToken;
+    // Decode token
+    if (userObj?.access){
+        decodedToken = decodeJwt(userObj?.access)
+    }
 
     return (
         <AppContext.Provider value={{
