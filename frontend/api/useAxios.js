@@ -3,20 +3,20 @@ import useGetContext from "../context/useGetAppContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { appUrls } from "../src/urls";
 
 
 
 
 
 const useAxios = () => {
-    const { setErrorApi, setUserObj, userObj, successAPI } = useGetContext()
-    const accessToken = Cookies.get("access_token") || null;
+    const { setErrorApi, setUserObj, userObj } = useGetContext()
+    // const accessToken = Cookies.get("access_token") || null;
     const navigate = useNavigate()
     axiosInstancePrivate.interceptors.request.use(
         (config) => {
-            // const accessToken = JSON.parse(localStorage.getItem("access_token"));
-            if (accessToken) {
-                config.headers.Authorization = `JWT ${accessToken}`;
+            if (userObj?.access) {
+                config.headers.Authorization = `JWT ${userObj?.access}`;
             }
             return config;
         },
@@ -52,13 +52,13 @@ const useAxios = () => {
                 } catch (error) {
                     // Handle refresh token error or redirect to login
                     setErrorApi("Authentication failed, you will be redirected to login");
-                    // localStorage.clear()
+                    Cookies.remove("access_token")
+                    Cookies.remove("refresh_token")
                     setUserObj({
-                        ...userObj,
                         access:"",
                         refresh:"",
                     })
-                    navigate("/login")
+                    navigate(appUrls.login)
 
                 }
             }

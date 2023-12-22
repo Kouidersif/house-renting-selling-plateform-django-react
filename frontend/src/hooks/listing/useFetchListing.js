@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import useAxios from "../../../api/useAxios";
+import { axiosInstancePublic } from "../../../api/AxiosInstance";
 
 
 const useFetchListing = () => {
@@ -11,9 +11,10 @@ const useFetchListing = () => {
     const [ listingType , setListingType ] = useState("");
 
 
-    const api = useAxios()
+    const api = axiosInstancePublic
     const fetchListing = async () =>{
         try{
+            // Public endpoint
             const query = `address=${address}&num_bath_rooms=${bathRoomsNum}&num_bed_rooms=${bedRoomsNum}&contract_type=${contractType}&listing_type=${listingType}`
                 const response = await api.get(`/api/listing/?${query}`);
                 setListing(response?.data)

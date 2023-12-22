@@ -1,6 +1,8 @@
 import propTypes from "prop-types";
 
-const SideBar = ({setTab}) => {
+const SideBar = ({setTab, logoutFunc}) => {
+
+
     return (
         <>
             <aside
@@ -33,7 +35,7 @@ const SideBar = ({setTab}) => {
                             </button>
                         </li>
                         <li>
-                            <button onClick={()=>setTab("")}
+                            <button onClick={logoutFunc}
                                 className="w-full flex items-center px-2 py-4 text-lg font-normal text-gray-900  hover:bg-gray-100 group"
                             >
                                 <i className="bi bi-box-arrow-left text-xl text-red-500"></i>
@@ -50,6 +52,7 @@ const SideBar = ({setTab}) => {
 
 SideBar.propTypes = {
     setTab : propTypes.func.isRequired,
+    logoutFunc : propTypes.func.isRequired,
 }
 
 export default SideBar

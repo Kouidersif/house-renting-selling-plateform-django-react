@@ -13,6 +13,7 @@ listing_serializer_class = ListingSerializer
 
 class ListingAPIView(generics.ListAPIView):
     serializer_class = listing_serializer_class
+    permission_classes = [ permissions.AllowAny ]
     queryset = serializer_class.Meta.model.objects.filter(is_public=True).order_by("id")
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ListingFilter

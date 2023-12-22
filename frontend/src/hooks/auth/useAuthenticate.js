@@ -3,10 +3,11 @@ import useGetAppContext from "../../../context/useGetAppContext";
 import { appUrls } from "../../urls";
 import useAxios from "../../../api/useAxios";
 import Cookies from 'js-cookie';
+import { axiosInstancePublic } from "../../../api/AxiosInstance";
 
 
 const useAuthenticate = () => {
-    const api = useAxios()
+    const api = axiosInstancePublic
     const navigate = useNavigate()
     const { setErrorApi, setUserObj, userObj, successAPI } = useGetAppContext()
     

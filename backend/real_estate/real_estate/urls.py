@@ -4,8 +4,11 @@ from django.urls import path, include
 
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
+    TokenBlacklistView
 )
 from .token.custom_token import MyTokenObtainPairView
+
+
 
 
 
@@ -19,4 +22,5 @@ urlpatterns = [
     # Auth
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
 ]
