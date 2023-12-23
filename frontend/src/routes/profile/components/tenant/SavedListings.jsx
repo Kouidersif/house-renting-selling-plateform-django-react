@@ -1,5 +1,5 @@
-import { ListingCards } from "../../../utils/exporter"
-import { DummyData } from "../../../../api/data"
+import { ListingCards } from "../../../../utils/exporter"
+import { DummyData } from "../../../../../api/data"
 
 const SavedListings = () => {
 

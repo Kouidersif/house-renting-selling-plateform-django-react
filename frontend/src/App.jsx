@@ -4,6 +4,7 @@ import { Home, Login, Register,
 import { NavBar} from "./components/exporter"
 import Footer from "./components/footer/Footer"
 import { appUrls } from "./urls"
+import APIAlert from "./utils/notifications/APIAlert"
 
 
 
@@ -18,6 +19,7 @@ function App() {
     {
       !shouldHideNavBar && <NavBar urls={appUrls} />
     }
+    <APIAlert />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register urls={appUrls}  />} />

@@ -30,8 +30,7 @@ LISTING_TYPE = (
 
 def get_upload_path(instance, filename):
     try:
-        
         # construct upload path by appending instance ID
-        return f"listing/media/{instance.id}/{filename}"
+        return f"listing/media/{filename}"
     except:
         return "listing/media/"

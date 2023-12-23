@@ -14,7 +14,7 @@ const Register = ({ urls }) => {
     const [userEmail, setUserEamil] = useState("")
     const [userPwd, setUserPwd] = useState("")
     const [userType, setUserType] = useState("")
-    const { setErrorApi } = useGetAppContext()
+    const { setErrorApi, formsError } = useGetAppContext()
 
 
 
@@ -72,9 +72,9 @@ const Register = ({ urls }) => {
                 <div className="w-[80%] 2xl:py-16 mx-auto flex flex-col gap-12">
                     <h2 className="text-center md:text-start">Get Started Now</h2>
                     <div className="flex flex-col gap-6">
-                        <InputField value={userFullName} onChangeFunc={setUserFullName} placeHolder={"Enter your name"} labelName={"Name"} inputType={"text"} inputID={"userFullName"} />
-                        <InputField value={userEmail} onChangeFunc={setUserEamil} placeHolder={"Enter your email"} labelName={"Email address"} inputType={"email"} inputID={"userEmail"} />
-                        <InputField value={userPwd} onChangeFunc={setUserPwd} placeHolder={"Enter your password"} labelName={"Password"} inputType={"password"} inputID={"userPassword"} />
+                        <InputField err={formsError?.first_name} value={userFullName} onChangeFunc={setUserFullName} placeHolder={"Enter your name"} labelName={"Name"} inputType={"text"} inputID={"userFullName"} />
+                        <InputField err={formsError?.email} value={userEmail} onChangeFunc={setUserEamil} placeHolder={"Enter your email"} labelName={"Email address"} inputType={"email"} inputID={"userEmail"} />
+                        <InputField err={formsError?.password} value={userPwd} onChangeFunc={setUserPwd} placeHolder={"Enter your password"} labelName={"Password"} inputType={"password"} inputID={"userPassword"} />
 
                         <ul className="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
                             <li>
@@ -146,6 +146,7 @@ const Register = ({ urls }) => {
                                 </label>
                             </li>
                         </ul>
+                        
 
                         <div className="flex gap-2 items-center">
                             <input type="checkbox" className="w-4 h-4" name="" id="" />

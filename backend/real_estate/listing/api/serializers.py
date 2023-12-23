@@ -31,7 +31,7 @@ class ListingSerializer(serializers.ModelSerializer):
         # # Additional layer of validation
         images_files = validated_data.get("files_img")
         # 
-        data.pop("files_img")
+        validated_data.pop("files_img")
         listing = Listing(
             **validated_data
         )

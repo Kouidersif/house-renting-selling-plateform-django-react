@@ -1,6 +1,9 @@
 import propTypes from "prop-types";
+import useGetAppContext from "../../../../context/useGetAppContext";
 
 const SideBar = ({setTab, logoutFunc}) => {
+
+    const { decodedToken } = useGetAppContext()
 
 
     return (
@@ -18,7 +21,11 @@ const SideBar = ({setTab, logoutFunc}) => {
                                 <span className="ml-3">Profile</span>
                             </button>
                         </li>
-                        <li>
+                        {/* Tenant Access only */}
+                        {
+                            decodedToken?.is_tenant &&
+                        <>
+                            <li>
                             <button  onClick={()=> setTab("saved-listings")}
                                 className="w-full flex items-center px-2 py-4 border-b-2 text-lg font-normal text-gray-900  hover:bg-gray-100 group"
                             >
@@ -34,6 +41,21 @@ const SideBar = ({setTab, logoutFunc}) => {
                                 <span className="ml-3">Visit requests</span>
                             </button>
                         </li>
+                        </>
+                        }
+                        {/* End Tenant Access only */}
+
+                        {
+                            decodedToken?.is_landlord &&
+                            <li>
+                            <button  onClick={()=> setTab("posted-listings")}
+                                className="w-full flex items-center px-2 py-4 border-b-2 text-lg font-normal text-gray-900  hover:bg-gray-100 group"
+                            >
+                                <i className="bi bi-bookmark-check-fill text-xl text-electric"></i>
+                                <span className="ml-3">My listings</span>
+                            </button>
+                        </li>
+                        }
                         <li>
                             <button onClick={logoutFunc}
                                 className="w-full flex items-center px-2 py-4 text-lg font-normal text-gray-900  hover:bg-gray-100 group"

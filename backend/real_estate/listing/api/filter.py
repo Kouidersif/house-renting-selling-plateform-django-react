@@ -8,8 +8,9 @@ class ListingFilter(django_filters.FilterSet):
     num_bed_rooms  = django_filters.CharFilter(lookup_expr='iexact')
     contract_type  = django_filters.CharFilter(lookup_expr='iexact')
     listing_type   = django_filters.CharFilter(lookup_expr='iexact')
+    landlord   = django_filters.CharFilter(lookup_expr='exact')
 
     class Meta:
         model = Listing
         fields = [ "address", "listing_type", "contract_type", 
-                    "num_bed_rooms", "num_bath_rooms" ]
+                    "num_bed_rooms", "num_bath_rooms", "landlord" ]

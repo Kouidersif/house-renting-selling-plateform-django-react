@@ -1,10 +1,11 @@
 import { useState } from "react"
 import SideBar from "./components/SideBar"
 import UserData from "./components/UserData"
-import SavedListings from "./components/SavedListings";
-import VisitRequests from "./components/VisitRequests";
+import SavedListings from "./components/tenant/SavedListings";
+import VisitRequests from "./components/tenant/VisitRequests";
 import useFetchUpdateProfile from "../../hooks/profile/useFetchUpdateProfile";
 import useLogout from "../../hooks/auth/useLogout";
+import LandlordListing from "./components/landlord/LandlordListing";
 
 
 const UserProfile = () => {
@@ -19,7 +20,9 @@ const UserProfile = () => {
             {
                 tab === "data" ? <UserData account={account} updateUserAccount={updateUserAccount} updateUserProfile={updateUserProfile} /> : 
                 tab === "saved-listings" ? <SavedListings /> : 
-                tab === "visit-requests" ? <VisitRequests /> : null
+                tab === "visit-requests" ? <VisitRequests /> : 
+                tab === "posted-listings" ? <LandlordListing /> : 
+                null
                 
             }
             </div>

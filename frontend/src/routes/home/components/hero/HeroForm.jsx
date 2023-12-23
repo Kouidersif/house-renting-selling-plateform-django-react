@@ -4,6 +4,7 @@ import InputField from '../../../../utils/inputs/InputField'
 import SelectInput from '../../../../utils/select/SelectInput'
 
 const HeroForm = () => {
+    
     return (
         <div className="w-full xl:flex-1 max-w-[30rem]">
             <form className="bg-white pb-16 pt-6 rounded-3xl">

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import { DummyData } from "../../../../api/data"
-import { ListingCards } from "../../../utils/exporter"
+import { DummyData } from "../../../../../api/data"
+import { ListingCards } from "../../../../utils/exporter"
 
 
 const VisitRequests = () => {

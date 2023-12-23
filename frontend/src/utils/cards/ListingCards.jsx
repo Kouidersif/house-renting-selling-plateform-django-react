@@ -1,19 +1,19 @@
 import PropTypes from "prop-types";
 import { Alerts, SmallFontParagraph } from '../../utils/exporter'
-
+import noImg from "../../assets/images/errorImg/noImage.jpeg"
 
 const ListingCards = ({dataObj, tag, specialClass}) => {
     return (
         <div className={`flex flex-col gap-4 mb-4 cursor-pointer hover:scale-110 duration-500 ${specialClass}`}>
             <div className="w-full lg:w-72 h-72 relative">
-                <img src={"https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg"}
+                <img src={ dataObj.listing_images[0].image ? dataObj.listing_images[0].image : noImg}
                     alt="house-image" className="w-full h-full rounded-3xl object-cover" />
                 <Alerts alert={tag} />
             </div>
             <div className="flex flex-col gap-1">
                 <h3 className="text-[1.3rem] font-semibold flex justify-between">
                 <span className="text-slate-400">{dataObj?.contract_type?.toUpperCase()}</span> $ {dataObj?.property_price}</h3>
-                <h4 className="text-[1rem] font-medium">{dataObj?.listing_title}</h4>
+                <h4 className="text-[1rem] font-medium">{dataObj?.listing_title.substring(0, 30)}</h4>
                 <SmallFontParagraph text={dataObj?.address} />
             </div>
             <div className="flex items-center gap-4">

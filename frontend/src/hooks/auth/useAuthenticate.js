@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useGetAppContext from "../../../context/useGetAppContext";
 import { appUrls } from "../../urls";
-import useAxios from "../../../api/useAxios";
 import Cookies from 'js-cookie';
 import { axiosInstancePublic } from "../../../api/AxiosInstance";
 
@@ -9,7 +8,8 @@ import { axiosInstancePublic } from "../../../api/AxiosInstance";
 const useAuthenticate = () => {
     const api = axiosInstancePublic
     const navigate = useNavigate()
-    const { setErrorApi, setUserObj, userObj, successAPI } = useGetAppContext()
+    const { setErrorApi, setUserObj,setSuccessApi, setFormsError,
+        userObj } = useGetAppContext()
     
     const loginFunc = async (formData)=>{
         try{
@@ -24,17 +24,15 @@ const useAuthenticate = () => {
                 access: data?.access,
                 refresh: data?.refresh
             })
+            setSuccessApi("Successfully Logged in")
             // Show a message to user then redirect
             navigate(appUrls.listing)
-            successAPI("Succesfully logged in!")
             
         }catch(err){
             if (err?.response?.status === 401){
                 setErrorApi("No active account found with the given credentials")
             }else if(err?.response?.status === 500){
                 setErrorApi("Server error, please try again!")
-            }else{
-                setErrorApi("Something went wrong")
             }
             
         }
@@ -55,18 +53,17 @@ const useAuthenticate = () => {
                 refresh: data?.refresh
             })
             // Show a message to user then redirect
+            setSuccessApi("Succesfully completed registration")
             navigate(appUrls.listing)
-            successAPI("Succesfully completed registration")
+            
+            
             
         }catch(err){
-            if ( err?.response?.status === 400 && err?.response?.data?.email[0] ){
-                setErrorApi(err?.response?.data?.email[0])
-            }else if ( err?.response?.status === 400 && err?.response?.data[0] ) {
-                setErrorApi( err?.response?.data[0] )
-            }else if (err?.response?.status === 500){
+            const errResp = err?.response
+            if ( errResp?.status === 400 && errResp?.data ){
+                setFormsError(errResp?.data)
+            }else if ( errResp?.status === 500){
                 setErrorApi("Server Error")
-            }else{
-                setErrorApi("Error occured")
             }
         }
     }
