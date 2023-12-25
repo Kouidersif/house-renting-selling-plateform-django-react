@@ -13,7 +13,7 @@ const UserProfile = () => {
     const { account, updateUserAccount, updateUserProfile } = useFetchUpdateProfile()
     const { logoutFunc } = useLogout()
     return (
-        <div className="w-[95%] xl:w-[80%] mx-auto flex gap-2 min-h-screen">
+        <div className="w-[95%] xl:w-[80%] mx-auto flex flex-col md:flex-row gap-2 min-h-screen">
             <SideBar setTab={setTab} logoutFunc={logoutFunc} />
             {/* Right side */}
             <div className="flex-1 px-4 py-8">

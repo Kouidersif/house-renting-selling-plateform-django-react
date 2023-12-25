@@ -23,6 +23,7 @@ const CreateListing = () => {
     const [propertyArea, setPropertyArea] = useState("");
     const [listingTitle, setListingTitle] = useState("");
     const [contractType, setContractType] = useState("");
+    const [description, setDescription] = useState("");
     const [listingImages, setImages] = useState([]);
 
     const handleSubmition = (e) => {
@@ -42,6 +43,7 @@ const CreateListing = () => {
         formData.append("property_area", propertyArea)
         formData.append("contract_type", contractType)
         formData.append("listing_title", listingTitle)
+        formData.append("description", description)
         for (let i = 0; i < listingImages.length; i++) {
             formData.append("files_img", listingImages[i]);
         }
@@ -160,6 +162,10 @@ const CreateListing = () => {
                             optionsValue={builtYears} selectID="yearBuilr" err={formsError?.year_built} />
                     </div>
                     <InputField value={price} onChangeFunc={setPrice} err={formsError?.property_price} placeHolder="Price" labelName="Price" inputType={"number"} inputID="listingPrice" />
+                    <textarea  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Add description"
+                    value={description} rows={5} onChange={(e)=> setDescription(e.target.value)}>
+
+                    </textarea>
                     {/* INPUT IMG */}
                     <div className="flex items-center justify-center w-full">
                         <label

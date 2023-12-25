@@ -11,6 +11,7 @@ class LandlordProfile(models.Model):
     agency_name = models.CharField(max_length=350, null=True, blank=True)
     profile_img = models.ImageField(upload_to="landlord/profile/", null=True, blank=True)
     nationality = models.CharField(max_length=299, null=True)
+    phonne_number = models.CharField(max_length=12, null=True)
     gender =  models.CharField(max_length=60, choices=GENDER)
     date_of_birth = models.DateField(null=True, blank=True)
     

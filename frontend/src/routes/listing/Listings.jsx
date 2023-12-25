@@ -2,6 +2,7 @@ import { ListingCards } from "../../utils/exporter"
 import FilterBar from "./FilterBar"
 import { Link } from "react-router-dom"
 import useFetchListing from "../../hooks/listing/useFetchListing"
+import { appUrls } from "../../urls"
 
 
 const Listings = () => {
@@ -28,7 +29,7 @@ const Listings = () => {
             <div className="w-full flex items-center md:justify-center flex-wrap gap-6 py-8 lg:py-16">
                 {
                     listingOjbects?.map((data) => (
-                        <Link key={data.id} to={"/"}>
+                        <Link key={data.id} to={`${appUrls.viewListing}/${data?.id}`}>
                             <ListingCards dataObj={data} tag={"Popular"} specialClass="w-full md:w-auto" />
                         </Link>
                     ))

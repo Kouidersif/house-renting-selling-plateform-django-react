@@ -3,7 +3,7 @@ export const appUrls = {
     register : "/register",
     home : "/",
     listing : "/listings",
-    viewListing : "/listing/view/", // + listing ID or Str,
+    viewListing : "/listing/view", // + listing ID or Str,
     createListing : "/listing/create/",
     landlordHomePage : "/landlord",
     userProfile : "/profile",

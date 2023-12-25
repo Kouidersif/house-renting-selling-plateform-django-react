@@ -16,6 +16,7 @@ const UserData = ({account, updateUserAccount, updateUserProfile}) => {
     const [ dateOfBirth, setDateOfBirth ] = useState("")
     const [ userGender, setUserGender ] = useState("")
     const [ userNationality, setUserNationality ] = useState("")
+    const [ phoneNum, setPhoneNum ] = useState("")
 
 
     useEffect(()=> {
@@ -23,9 +24,18 @@ const UserData = ({account, updateUserAccount, updateUserProfile}) => {
             setUserFullName(`${account?.first_name} ${account?.last_name}` || "")
             setUserEamil(account?.email || "")
             // Profile
-            setDateOfBirth(account?.landlord?.date_of_birth || "")
-            setUserGender(account?.landlord?.gender || "")
-            setUserNationality(account?.landlord?.nationality || "")
+            if (account?.landlord){
+                setDateOfBirth(account?.landlord?.date_of_birth || "")
+                setUserGender(account?.landlord?.gender || "")
+                setUserNationality(account?.landlord?.nationality || "")
+                setPhoneNum(account?.landlord?.phonne_number || "")
+            }else if (account?.tenant){
+
+                setDateOfBirth(account?.tenant?.date_of_birth || "")
+                setUserGender(account?.tenant?.gender || "")
+                setUserNationality(account?.tenant?.nationality || "")
+                setPhoneNum(account?.tenant?.phonne_number || "")
+            }
         }
     }, [account])
 
@@ -51,6 +61,7 @@ const UserData = ({account, updateUserAccount, updateUserProfile}) => {
         formData.append("gender", userGender)
         formData.append("nationality", userNationality)
         formData.append("date_of_birth", dateOfBirth)
+        formData.append("phonne_number", phoneNum)
 
         updateUserProfile(formData)
     }
@@ -78,6 +89,10 @@ const UserData = ({account, updateUserAccount, updateUserProfile}) => {
             <InputField placeHolder={"date of birth"} labelName={"Date of Birth"}
             onChangeFunc={setDateOfBirth} err={formsError?.date_of_birth} 
             inputID={"dateOfBirth"} inputType={"date"} value={dateOfBirth} />
+
+            <InputField placeHolder={"Phone number"} labelName={"Phone number"}
+            onChangeFunc={setPhoneNum} err={formsError?.phonne_number} 
+            inputID={"phoneNum"} inputType={"text"} value={phoneNum} />
 
             <SelectInput labelName={"Gender"} selectID={"userGender"} 
             onChangeValue={setUserGender} err={formsError?.gender} 

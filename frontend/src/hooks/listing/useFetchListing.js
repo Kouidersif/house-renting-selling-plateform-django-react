@@ -4,6 +4,7 @@ import { axiosInstancePublic } from "../../../api/AxiosInstance";
 
 const useFetchListing = () => {
     const [ listingOjbects , setListing ] = useState([]);
+    const [ listingDetail, setListingDetail ] = useState({})
     const [ address, setAddress ] = useState("");
     const [ bedRoomsNum, setBedRoomsNum ] = useState("");
     const [ bathRoomsNum , setBathRoomsNum ] = useState("");
@@ -21,6 +22,15 @@ const useFetchListing = () => {
                 setListing(response?.data)
         }catch(err){
             console.log("err:", err)
+        }
+    }
+
+    const listingDetailFetch = async (listingID)=>{
+        try{
+                const response = await api.get(`api/listing/retrieve/${listingID}/`)
+                setListingDetail(response?.data)
+        }catch(err){
+            console.log("err: ", err)
         }
     }
 
@@ -42,7 +52,8 @@ const useFetchListing = () => {
             bedRoomsNum,
             bathRoomsNum,
             contractType,
-            listingType }
+            listingType, 
+            listingDetailFetch, listingDetail }
 }
 
 export default useFetchListing

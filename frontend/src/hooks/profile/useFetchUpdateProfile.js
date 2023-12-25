@@ -7,13 +7,15 @@ const useFetchUpdateProfile = () => {
 
     const [ account, setAccount] = useState({});
     const api = useAxios()
-    const { setFormsError, setErrorApi, decodedToken } = useGetAppContext()
-    const { user_id, landlord_profile_id } = decodedToken
+    const { setFormsError, setErrorApi, decodedToken, userObj, setSuccessApi } = useGetAppContext()
+    const user_id = decodedToken?.user_id
+    const landlord_profile_id = decodedToken?.landlord_profile_id
+    const tenant_profile_id = decodedToken?.tenant_profile_id
 
+    
     const fetchUser = async () =>{
         try{
             const response = await api.get(`api/auth/retrieve/${user_id}/`);
-            
             setAccount(response?.data)
         }catch(err){
             console.log("error", err)
@@ -24,7 +26,7 @@ const useFetchUpdateProfile = () => {
         try{
             setFormsError("")
             const response = await api.put(`api/auth/retrieve/${user_id}/`, formData);
-            
+            setSuccessApi("Account has been updated")
         }catch(err){
             const resp = err?.response
             if ( resp?.status === 400 ){
@@ -37,11 +39,16 @@ const useFetchUpdateProfile = () => {
             }
         }
     }
+
+    
+
     const updateUserProfile = async (formData) =>{
+        let url;
         try{
+            url = decodedToken?.is_landlord ? `landlord/retrieve/${landlord_profile_id}/` : decodedToken?.is_tenant ? `tenant/retrieve/${tenant_profile_id}/` : null
             setFormsError("")
-            const response = await api.put(`api/landlord/retrieve/${landlord_profile_id}/`, formData);
-            console.log(response?.data)
+            const response = await api.put(`api/${url}`, formData);
+            setSuccessApi("Profile has been updated")
         }catch(err){
             const resp = err?.response
             if ( resp?.status === 400 ){
@@ -57,10 +64,13 @@ const useFetchUpdateProfile = () => {
 
 
     useEffect(()=>{
-        fetchUser()
+        if(userObj?.access){
+            fetchUser()
+        }
+        
     }, [])
 
-    return { fetchUser, account, updateUserProfile, updateUserAccount }
+    return { fetchUser,account, updateUserProfile, updateUserAccount }
 }
 
 export default useFetchUpdateProfile

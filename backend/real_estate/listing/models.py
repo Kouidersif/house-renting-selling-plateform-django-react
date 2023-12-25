@@ -9,6 +9,7 @@ class Listing(models.Model):
     landlord = models.ForeignKey(LandlordProfile, related_name="listing_owner" , on_delete=models.SET_NULL, null=True)
     listing_title = models.CharField(max_length=399)
     address = models.CharField(max_length=350)
+    description = models.TextField()
     num_bed_rooms = models.CharField(max_length=10, choices=BED_ROOM_BATH_ROOM_NUMBER)
     num_bath_rooms = models.CharField(max_length=10, choices=BED_ROOM_BATH_ROOM_NUMBER)
     property_area = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -39,8 +40,9 @@ class ListingImages(models.Model):
     
 class VisitRequest(models.Model):
     " A model allows tenants to request a visit or a call back "
-    tenant = models.ForeignKey(TenantProfile,related_name="visit_tenant" , on_delete=models.CASCADE)
-    landlord = models.ForeignKey(LandlordProfile, related_name="visit_landlord", on_delete=models.CASCADE)
+    tenant = models.ForeignKey(TenantProfile,related_name="visit_tenant" , on_delete=models.CASCADE, null=True)
+    landlord = models.ForeignKey(LandlordProfile, related_name="visit_landlord", on_delete=models.CASCADE, null=True)
+    listing_obj = models.ForeignKey(Listing, related_name="listing_requested", on_delete=models.CASCADE, null=True)
     message = models.TextField()
     date_visit = models.DateTimeField()
     request_status = models.CharField(max_length=299, choices=REQUEST_STATUS)

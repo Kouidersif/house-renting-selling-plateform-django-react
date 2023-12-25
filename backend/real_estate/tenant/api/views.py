@@ -1,5 +1,6 @@
 from .serializers import TenantSerializer
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 
 
 serializer_class = TenantSerializer
@@ -8,7 +9,7 @@ class TenantListCreateAPI(generics.ListCreateAPIView):
     queryset = serializer_class.Meta.model.objects.all()
     
 
-class RetrieveTenantAPIView(generics.ListCreateAPIView):
+class RetrieveTenantAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = serializer_class
     queryset = serializer_class.Meta.model
     def update(self, request, *args, **kwargs):

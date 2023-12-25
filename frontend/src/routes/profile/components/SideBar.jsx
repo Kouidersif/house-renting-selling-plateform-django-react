@@ -9,7 +9,7 @@ const SideBar = ({setTab, logoutFunc}) => {
     return (
         <>
             <aside
-                className="hidden md:block w-64 min-h-full "
+                className="block w-full md:block md:w-64 min-h-full "
             >
                 <div className="overflow-y-auto py-5  h-full  border-gray-200">
                     <ul className="space-y-2">

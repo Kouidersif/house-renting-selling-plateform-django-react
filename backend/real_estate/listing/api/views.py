@@ -1,5 +1,6 @@
 from .serializers import (
-    ListingSerializer
+    ListingSerializer, 
+    VisitRequestSerializer
 )
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions, authentication, filters
@@ -9,6 +10,7 @@ from .filter import ListingFilter
 
 
 listing_serializer_class = ListingSerializer
+request_visit_serializer_class = VisitRequestSerializer
 
 
 class ListingAPIView(generics.ListAPIView):
@@ -40,3 +42,9 @@ class ListingRetreiverAPIView(generics.RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+    
+class VisitPropertyRequestAPiView(generics.CreateAPIView):
+    serializer_class = request_visit_serializer_class
+    queryset = serializer_class.Meta.model.objects.all()
