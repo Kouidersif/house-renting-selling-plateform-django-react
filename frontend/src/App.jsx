@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer"
 import { appUrls } from "./urls"
 import APIAlert from "./utils/notifications/APIAlert"
 import { NonAuthenticatedOrRedirect, RequireAuth } from "./permission/RequireAuth"
+import DemoAlert from "./utils/DemoAlert";
 
 
 
@@ -22,6 +23,9 @@ function App() {
       {
         !shouldHideNavBar && <NavBar urls={appUrls} />
       }
+      
+      <DemoAlert />
+
       <APIAlert />
       <Routes>
         <Route path="/" element={<Home />} />
